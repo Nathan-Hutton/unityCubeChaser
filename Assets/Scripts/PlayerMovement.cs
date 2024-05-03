@@ -8,12 +8,9 @@ public class PlayerMovement : MonoBehaviour
     private CustomInput input = null;
     private Vector3 moveVector = Vector3.zero;
     private float moveSpeed = 10f;
-    private Rigidbody rb = null;
-
     private void Awake()
     {
         input = new CustomInput();
-        rb = GetComponent<Rigidbody>();
     }
     private void OnEnable()
     {
@@ -27,9 +24,9 @@ public class PlayerMovement : MonoBehaviour
         input.Player.Movement.performed -= OnMovementPerformed;
         input.Player.Movement.canceled -= OnMovementCancelled;
     }
-    private void FixedUpdate() 
+    private void Update() 
     {
-        rb.velocity = moveVector.normalized * moveSpeed;
+        transform.position += moveVector.normalized * moveSpeed * Time.deltaTime;
     }
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {

@@ -1,17 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 
 public class Chaser : MonoBehaviour
 {
     public Transform targetTransform;
-    private UnityEngine.Vector3 directionToTarget;
-    float speed = 7f;
+    public float speed = 7f;
     void Update()
     {
-        directionToTarget = (targetTransform.position - transform.position).normalized;
-        UnityEngine.Vector3 velocity = directionToTarget * speed * Time.deltaTime;
-        transform.Translate(velocity);
+        Vector3 displacementFromTarget = targetTransform.position - transform.position;
+        if (displacementFromTarget.magnitude < 1.5)
+            return;
+
+        Vector3 velocity = displacementFromTarget.normalized * speed;
+        transform.Translate(velocity * Time.deltaTime);
     }
 }
